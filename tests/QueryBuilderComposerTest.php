@@ -14,9 +14,14 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
     /** @var QueryBuilderComposer */
     private $composer;
 
+    /** @var QueryBuilder|m\MockInterface */
+    private $queryBuilder;
+
     public function setUp()
     {
         $this->composer = new QueryBuilderComposer();
+
+        $this->queryBuilder = m::mock(QueryBuilder::class);
     }
 
     public function testShouldApplyRulesToQueryBuilder()
@@ -24,37 +29,36 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
         $approvedExpr = new Expr\Andx('b.approved = true');
         $approvedModifier = Curry::modifier()(true)('where')($approvedExpr);
 
-        $queryBuilder = m::mock(QueryBuilder::class);
-        $queryBuilder->shouldReceive('select')
+        $this->queryBuilder->shouldReceive('select')
             ->with('s.id', 's.name')
             ->once()
-            ->andReturn($queryBuilder);
-        $queryBuilder->shouldReceive('addSelect')
+            ->andReturn($this->queryBuilder);
+        $this->queryBuilder->shouldReceive('addSelect')
             ->with('s.age')
             ->once()
-            ->andReturn($queryBuilder);
-        $queryBuilder->shouldReceive('from')
+            ->andReturn($this->queryBuilder);
+        $this->queryBuilder->shouldReceive('from')
             ->with('student', 's')
             ->once()
-            ->andReturn($queryBuilder);
-        $queryBuilder->shouldReceive('andWhere')
+            ->andReturn($this->queryBuilder);
+        $this->queryBuilder->shouldReceive('andWhere')
             ->with('s.id > :id')
             ->once()
-            ->andReturn($queryBuilder);
-        $queryBuilder->shouldReceive('add')
+            ->andReturn($this->queryBuilder);
+        $this->queryBuilder->shouldReceive('add')
             ->with('where', $approvedExpr, true)
             ->once()
-            ->andReturn($queryBuilder);
-        $queryBuilder->shouldReceive('orderBy')
+            ->andReturn($this->queryBuilder);
+        $this->queryBuilder->shouldReceive('orderBy')
             ->with('s.name', 'asc')
             ->once()
-            ->andReturn($queryBuilder);
-        $queryBuilder->shouldReceive('groupBy')
+            ->andReturn($this->queryBuilder);
+        $this->queryBuilder->shouldReceive('groupBy')
             ->with('s.id')
             ->once()
-            ->andReturn($queryBuilder);
+            ->andReturn($this->queryBuilder);
 
-        $expectedQueryBuilder = $queryBuilder;
+        $expectedQueryBuilder = $this->queryBuilder;
         $rules = [
             ['select', 's.id', 's.name'],
             ['addSelect', 's.age'],
@@ -62,15 +66,15 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
             $approvedModifier,
             [$this, 'applySortToQueryBuilder'],
             ['andWhere', 's.id > :id'],
-            new GroupByModifier('s.id')
+            new GroupByModifier('s.id'),
         ];
 
-        $queryBuilder = $this->composer->compose($rules, $queryBuilder);
+        $this->queryBuilder = $this->composer->compose($rules, $this->queryBuilder);
 
-        $this->assertSame($expectedQueryBuilder, $queryBuilder);
+        $this->assertSame($expectedQueryBuilder, $this->queryBuilder);
     }
 
-    public static function applySortToQueryBuilder(QueryBuilder $queryBuilder)
+    public static function applySortToQueryBuilder(QueryBuilder $queryBuilder): QueryBuilder
     {
         return $queryBuilder->orderBy('s.name', 'asc');
     }

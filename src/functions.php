@@ -7,19 +7,19 @@ use Doctrine\ORM\QueryBuilder;
 
 const QBC_NAMESPACE = 'MF\\QueryBuilderComposer\\';
 
-const compose = QBC_NAMESPACE . 'compose';
-const applyPart = QBC_NAMESPACE . 'applyPart';
-const applyModifier = QBC_NAMESPACE . 'applyModifier';
-const applyRule = QBC_NAMESPACE . 'applyRule';
-const modifier = QBC_NAMESPACE . 'modifier';
-const modifierAppend = QBC_NAMESPACE . 'modifierAppend';
-const modifierSet = QBC_NAMESPACE . 'modifierSet';
+const COMPOSE = QBC_NAMESPACE . 'compose';
+const APPLY_PART = QBC_NAMESPACE . 'applyPart';
+const APPLY_MODIFIER = QBC_NAMESPACE . 'applyModifier';
+const APPLY_RULE = QBC_NAMESPACE . 'applyRule';
+const MODIFIER = QBC_NAMESPACE . 'modifier';
+const MODIFIER_APPEND = QBC_NAMESPACE . 'modifierAppend';
+const MODIFIER_SET = QBC_NAMESPACE . 'modifierSet';
 
 const APPEND = true;
 
 function compose(array $parts, QueryBuilder $queryBuilder): QueryBuilder
 {
-    return array_reduce($parts, applyPart, $queryBuilder);
+    return array_reduce($parts, APPLY_PART, $queryBuilder);
 }
 
 function applyPart(QueryBuilder $queryBuilder, $part): QueryBuilder
