@@ -151,4 +151,46 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
 
         $this->assertSame($this->queryBuilder, $queryBuilder);
     }
+
+    public function testShouldComposeRulesAndApplyRulesToQueryBuilder()
+    {
+        $parts = [
+            'select s.id s.name s.age',
+            'from student s',
+        ];
+
+        $this->queryBuilder->shouldReceive('select')
+            ->with('s.id', 's.name', 's.age')
+            ->once()
+            ->andReturn($this->queryBuilder);
+        $this->queryBuilder->shouldReceive('from')
+            ->with('student', 's')
+            ->once()
+            ->andReturn($this->queryBuilder);
+
+        $queryBuilder = $this->composer->compose($this->queryBuilder, $parts);
+
+        $this->assertSame($this->queryBuilder, $queryBuilder);
+    }
+
+    public function testShouldComposeRulesBySingleStringAndApplyRulesToQueryBuilder()
+    {
+        $parts = [
+            'select s.id s.name s.age',
+            'from student s',
+        ];
+
+        $this->queryBuilder->shouldReceive('select')
+            ->with('s.id', 's.name', 's.age')
+            ->once()
+            ->andReturn($this->queryBuilder);
+        $this->queryBuilder->shouldReceive('from')
+            ->with('student', 's')
+            ->once()
+            ->andReturn($this->queryBuilder);
+
+        $queryBuilder = $this->composer->compose($this->queryBuilder, $parts);
+
+        $this->assertSame($this->queryBuilder, $queryBuilder);
+    }
 }

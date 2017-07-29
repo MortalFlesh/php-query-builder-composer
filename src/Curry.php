@@ -11,7 +11,8 @@ use function Functional\curry_n;
  *      (QueryBuilder -> QueryBuilder)
  *
  *  Rule =
- *      string[]
+ *      | string[]
+ *      | string
  *
  *  Part =
  *      | QueryBuilderModifier
@@ -31,6 +32,7 @@ use function Functional\curry_n;
 class Curry
 {
     /**
+     * see Types above
      * @return callable (Part[], QueryBuilder) -> QueryBuilder
      */
     public static function compose(): callable
@@ -39,6 +41,7 @@ class Curry
     }
 
     /**
+     * see Types above
      * @return callable (QueryBuilder, Part) -> QueryBuilder
      */
     public static function applyPart(): callable
@@ -47,6 +50,7 @@ class Curry
     }
 
     /**
+     * see Types above
      * @return callable (QueryBuilder -> QueryBuilderModifier) -> QueryBuilder
      */
     public static function applyModifier(): callable
@@ -55,6 +59,7 @@ class Curry
     }
 
     /**
+     * see Types above
      * @return callable (QueryBuilder -> Part) -> QueryBuilder
      */
     public static function applyRule(): callable
@@ -63,6 +68,7 @@ class Curry
     }
 
     /**
+     * see Types above
      * @return callable (Append -> DqlQueryPart -> Expr -> QueryBuilder) -> QueryBuilder
      */
     public static function modifier(): callable
@@ -71,6 +77,7 @@ class Curry
     }
 
     /**
+     * see Types above
      * @return callable (DqlQueryPart -> Expr -> QueryBuilder) -> QueryBuilder
      */
     public static function modifierAppend(): callable
@@ -79,6 +86,7 @@ class Curry
     }
 
     /**
+     * see Types above
      * @return callable (DqlQueryPart -> Expr -> QueryBuilder) -> QueryBuilder
      */
     public static function modifierSet(): callable
