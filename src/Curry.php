@@ -35,7 +35,7 @@ class Curry
      */
     public static function compose(): callable
     {
-        return curry_n(2, compose);
+        return curry_n(2, COMPOSE);
     }
 
     /**
@@ -43,7 +43,7 @@ class Curry
      */
     public static function applyPart(): callable
     {
-        return curry_n(2, applyPart);
+        return curry_n(2, APPLY_PART);
     }
 
     /**
@@ -51,7 +51,7 @@ class Curry
      */
     public static function applyModifier(): callable
     {
-        return curry_n(2, applyModifier);
+        return curry_n(2, APPLY_MODIFIER);
     }
 
     /**
@@ -59,7 +59,7 @@ class Curry
      */
     public static function applyRule(): callable
     {
-        return curry_n(2, applyRule);
+        return curry_n(2, APPLY_RULE);
     }
 
     /**
@@ -67,7 +67,7 @@ class Curry
      */
     public static function modifier(): callable
     {
-        return curry_n(4, modifier);
+        return curry_n(4, MODIFIER);
     }
 
     /**
@@ -75,7 +75,7 @@ class Curry
      */
     public static function modifierAppend(): callable
     {
-        return curry_n(3, modifierAppend);
+        return curry_n(3, MODIFIER_APPEND);
     }
 
     /**
@@ -83,6 +83,6 @@ class Curry
      */
     public static function modifierSet(): callable
     {
-        return curry_n(3, modifierSet);
+        return curry_n(3, MODIFIER_SET);
     }
 }

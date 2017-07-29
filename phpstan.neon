@@ -1,2 +1,3 @@
 parameters:
     ignoreErrors:
+        - '#Doctrine\\ORM\\Query\\Expr#'
