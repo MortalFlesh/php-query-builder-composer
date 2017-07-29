@@ -31,12 +31,28 @@ class QueryBuilderComposer
      * - $qb->join('t.joined', 'j') : ['join', 't.joined', 'j']
      * - ...
      *
-     * @param array $parts
      * @param QueryBuilder $queryBuilder
+     * @param array $parts
      * @return QueryBuilder
      */
-    public function compose(array $parts, QueryBuilder $queryBuilder): QueryBuilder
+    public function compose(QueryBuilder $queryBuilder, array $parts): QueryBuilder
     {
         return compose($parts, $queryBuilder);
+    }
+
+    /**
+     * Use for compose different part groups given in more arguments
+     *
+     * Difference between compose and merge compose:
+     * - compose($queryBuilder, array_merge($baseParts, $otherParts));
+     * - mergeCompose($queryBuilder, $baseParts, $otherParts);
+     *
+     * @param QueryBuilder $queryBuilder
+     * @param array[] ...$partGroups
+     * @return QueryBuilder
+     */
+    public function mergeCompose(QueryBuilder $queryBuilder, array ...$partGroups): QueryBuilder
+    {
+        return $this->compose($queryBuilder, mergePartGroups($partGroups));
     }
 }

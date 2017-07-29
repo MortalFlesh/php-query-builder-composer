@@ -90,3 +90,10 @@ function modifierSet(string $dqlPartName, $dqlPart, QueryBuilder $queryBuilder):
 {
     return $queryBuilder->add($dqlPartName, $dqlPart, !APPEND);
 }
+
+function mergePartGroups(array $partGroups): array
+{
+    return array_reduce($partGroups, function (array $parts, array $group) {
+        return array_merge($parts, $group);
+    }, []);
+}
