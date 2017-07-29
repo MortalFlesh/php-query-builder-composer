@@ -4,6 +4,7 @@ namespace MF\QueryBuilderComposer;
 
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
+use function Functional\first;
 
 const QBC_NAMESPACE = 'MF\\QueryBuilderComposer\\';
 
@@ -14,6 +15,8 @@ const APPLY_RULE = QBC_NAMESPACE . 'applyRule';
 const MODIFIER = QBC_NAMESPACE . 'modifier';
 const MODIFIER_APPEND = QBC_NAMESPACE . 'modifierAppend';
 const MODIFIER_SET = QBC_NAMESPACE . 'modifierSet';
+
+const EXPLODE_BY_SPACE = QBC_NAMESPACE . 'explodeBySpace';
 
 const APPEND = true;
 
@@ -26,6 +29,10 @@ function applyPart(QueryBuilder $queryBuilder, $part): QueryBuilder
 {
     if (is_callable($part)) {
         return applyModifier($queryBuilder, $part);
+    }
+
+    if (is_string($part)) {
+        $part = [$part];
     }
 
     if (is_array($part)) {
@@ -42,6 +49,7 @@ function applyModifier(QueryBuilder $queryBuilder, callable $modifier): QueryBui
 
 function applyRule(QueryBuilder $queryBuilder, array $rule): QueryBuilder
 {
+    $rule = sanitizeRule($rule);
     $ruleMethod = array_shift($rule);
 
     if (method_exists($queryBuilder, $ruleMethod)) {
@@ -51,6 +59,13 @@ function applyRule(QueryBuilder $queryBuilder, array $rule): QueryBuilder
     throw new \InvalidArgumentException(
         sprintf('Given rule "%s" is not recognized and cant be applied to QueryBuilder', $ruleMethod)
     );
+}
+
+function sanitizeRule(array $rule): array
+{
+    return count($rule) === 1
+        ? explode(' ', first($rule))
+        : $rule;
 }
 
 /**

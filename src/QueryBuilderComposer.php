@@ -7,7 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 class QueryBuilderComposer
 {
     /**
-     * Parts is array of:
+     * Parts are array of:
      * - modifiers
      * - rules
      *
@@ -22,13 +22,16 @@ class QueryBuilderComposer
      * - (Modifier)         : [ new Modifier('...'), ... ]
      * - ...
      *
-     * Rule:
-     * | rule is array of strings which represents any QueryBuilder method call
+     * Rule (represents any QueryBuilder method call)
+     * | rule is string[], array of single string or single string
      *
      * example of rules:
-     * - (QueryBuilder method call) : (rule representation)
+     *   (QueryBuilder method call) : (rule representation)
      * - $qb->select('t.column')    : ['select', 't.column']
      * - $qb->join('t.joined', 'j') : ['join', 't.joined', 'j']
+     * - $qb->from('table', 't')    : ['from', 'table', 't']
+     * - $qb->from('table', 't')    : ['from table t']
+     * - $qb->from('table', 't')    : 'from table t'
      * - ...
      *
      * @param QueryBuilder $queryBuilder

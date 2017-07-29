@@ -14,6 +14,53 @@ Query Builder Composer
     composer require mf/query-builder-composer
 ```
 
+## Compose parts for `QueryBuilder`
+`Parts` are array of:
+- modifiers
+- rules
+
+### Modifier:
+`Modifier` is **ANY** `callable` by this pattern: `(QueryBuilder -> QueryBuilder)`
+
+#### example of `Modifiers`:
+
+    - (anonymus function): [ function(QueryBuilder $qb) { return $qb->select('...'); }, ... ]
+    - (static function)  : [ [$this, 'modifyQueryBuilder'], ... ]
+    - (closure)          : [ $addSelectModifier, ... ]
+    - (Modifier)         : [ new Modifier('...'), ... ]
+    - ...
+
+
+### Rule:
+`Rule` represents any `QueryBuilder` method call
+- array of `strings`
+- array of **single** `string` (_separator is `space`_)
+- just a **single** `string` (_separator is `space`_)
+
+Let's say we have this `QueryBuilder` method call:
+```php
+// method
+$queryBuilder->from('student', 's');
+    
+// Rule
+['from', 'student', 's']
+OR
+['from student s']
+OR
+'from student s'
+```
+
+#### example of `Rules`:
+`(QueryBuilder method call) : (rule representation)`
+    
+    - $qb->select('t.column')    : ['select', 't.column']
+    - $qb->join('t.joined', 'j') : ['join', 't.joined', 'j']
+    - $qb->from('table', 't')    : ['from', 'table', 't']
+    - $qb->from('table', 't')    : ['from table t']
+    - $qb->from('table', 't')    : 'from table t'
+    - ...
+
+
 ## Usage 
 
 ### Why? What is a problem?
@@ -294,8 +341,8 @@ public function findFreeCourses()
 ### Difference between `compose` vs `mergeCompose`
 ```php
 $baseParts = [
-    ['select', 's.id, s.name, s.age'],
-    ['from', 'student', 's'],
+    'select s.id s.name s.age',
+    'from student s',
 ];
 
 $approvedMature = [
@@ -342,16 +389,4 @@ public function complexResult()
         ->getQuery()
         ->getResult();
 }
-```
-
-## Todo
-- make `applyRule` smarter to allow following (_parse single string by spaces_):
-```php
-    ->compose(
-        $queryBuilder,
-        [
-            ['select s.id s.name']
-            ['from student s']
-        ]
-    )
 ```
