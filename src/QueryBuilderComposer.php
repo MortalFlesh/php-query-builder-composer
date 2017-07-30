@@ -38,7 +38,7 @@ class QueryBuilderComposer
      * @param array $parts
      * @return QueryBuilder
      */
-    public function compose(QueryBuilder $queryBuilder, array $parts): QueryBuilder
+    public static function compose(QueryBuilder $queryBuilder, array $parts): QueryBuilder
     {
         return compose($parts, $queryBuilder);
     }
@@ -54,8 +54,8 @@ class QueryBuilderComposer
      * @param array[] ...$partGroups
      * @return QueryBuilder
      */
-    public function mergeCompose(QueryBuilder $queryBuilder, array ...$partGroups): QueryBuilder
+    public static function mergeCompose(QueryBuilder $queryBuilder, array ...$partGroups): QueryBuilder
     {
-        return $this->compose($queryBuilder, mergePartGroups($partGroups));
+        return self::compose($queryBuilder, mergePartGroups($partGroups));
     }
 }

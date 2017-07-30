@@ -5,22 +5,17 @@ namespace MF\QueryBuilderComposer\Tests;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use MF\QueryBuilderComposer\Curry;
-use MF\QueryBuilderComposer\QueryBuilderComposer;
+use MF\QueryBuilderComposer\QueryBuilderComposer as QBC;
 use MF\QueryBuilderComposer\Tests\Fixture\GroupByModifier;
 use Mockery as m;
 
 class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
 {
-    /** @var QueryBuilderComposer */
-    private $composer;
-
     /** @var QueryBuilder|m\MockInterface */
     private $queryBuilder;
 
     public function setUp()
     {
-        $this->composer = new QueryBuilderComposer();
-
         $this->queryBuilder = m::mock(QueryBuilder::class);
     }
 
@@ -68,7 +63,7 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
             ->once()
             ->andReturn($this->queryBuilder);
 
-        $queryBuilder = $this->composer->compose($this->queryBuilder, $parts);
+        $queryBuilder = QBC::compose($this->queryBuilder, $parts);
 
         $this->assertSame($this->queryBuilder, $queryBuilder);
     }
@@ -110,7 +105,7 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
             ->once()
             ->andReturn($this->queryBuilder);
 
-        $queryBuilder = $this->composer->compose($this->queryBuilder, array_merge($customParts, $approvedMature));
+        $queryBuilder = QBC::compose($this->queryBuilder, array_merge($customParts, $approvedMature));
 
         $this->assertSame($this->queryBuilder, $queryBuilder);
     }
@@ -147,7 +142,7 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
             ->once()
             ->andReturn($this->queryBuilder);
 
-        $queryBuilder = $this->composer->mergeCompose($this->queryBuilder, $customParts, $approvedMature);
+        $queryBuilder = QBC::mergeCompose($this->queryBuilder, $customParts, $approvedMature);
 
         $this->assertSame($this->queryBuilder, $queryBuilder);
     }
@@ -159,6 +154,7 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
             'from student s',
         ];
 
+
         $this->queryBuilder->shouldReceive('select')
             ->with('s.id', 's.name', 's.age')
             ->once()
@@ -168,7 +164,7 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
             ->once()
             ->andReturn($this->queryBuilder);
 
-        $queryBuilder = $this->composer->compose($this->queryBuilder, $parts);
+        $queryBuilder = QBC::compose($this->queryBuilder, $parts);
 
         $this->assertSame($this->queryBuilder, $queryBuilder);
     }
@@ -189,7 +185,7 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
             ->once()
             ->andReturn($this->queryBuilder);
 
-        $queryBuilder = $this->composer->compose($this->queryBuilder, $parts);
+        $queryBuilder = QBC::compose($this->queryBuilder, $parts);
 
         $this->assertSame($this->queryBuilder, $queryBuilder);
     }
