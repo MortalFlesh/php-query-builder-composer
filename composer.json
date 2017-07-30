@@ -29,6 +29,7 @@
         }
     },
     "require": {
+        "php": ">=7.1",
         "lstrojny/functional-php": "^1.6",
         "doctrine/orm": "^2.1"
     },
