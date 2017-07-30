@@ -1,12 +1,12 @@
 <?php
 
-namespace MF\QueryBuilderComposer;
+namespace MF\QueryBuilderComposer\Functions;
 
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
-use function Functional\first;
+use function Functional\every;
 
-const QBC_NAMESPACE = 'MF\\QueryBuilderComposer\\';
+const QBC_NAMESPACE = 'MF\\QueryBuilderComposer\\Functions\\';
 
 const COMPOSE = QBC_NAMESPACE . 'compose';
 const APPLY_PART = QBC_NAMESPACE . 'applyPart';
@@ -25,19 +25,21 @@ function compose(array $parts, QueryBuilder $queryBuilder): QueryBuilder
 
 function applyPart(QueryBuilder $queryBuilder, $part): QueryBuilder
 {
-    if (is_callable($part)) {
+    if (isModifier($part)) {
         return applyModifier($queryBuilder, $part);
     }
 
-    if (is_string($part)) {
-        $part = [$part];
-    }
+    if (isSingleStringPart($part)) {
+        $part = singleStringPartToPart($part);
+    } elseif (every($part, IS_PART)) {
+        return compose($part, $queryBuilder);
+    };
 
-    if (is_array($part)) {
+    if (isRule($part)) {
         return applyRule($queryBuilder, $part);
     }
 
-    throw new \InvalidArgumentException(sprintf('Unrecognized part given. - %s.', $part));
+    throw new \InvalidArgumentException(sprintf('Unrecognized part given. - %s.', var_export($part, true)));
 }
 
 function applyModifier(QueryBuilder $queryBuilder, callable $modifier): QueryBuilder
@@ -57,13 +59,6 @@ function applyRule(QueryBuilder $queryBuilder, array $rule): QueryBuilder
     throw new \InvalidArgumentException(
         sprintf('Given rule "%s" is not recognized and cant be applied to QueryBuilder', $ruleMethod)
     );
-}
-
-function sanitizeRule(array $rule): array
-{
-    return count($rule) === 1
-        ? explode(' ', first($rule))
-        : $rule;
 }
 
 /**

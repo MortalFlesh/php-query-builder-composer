@@ -154,7 +154,6 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
             'from student s',
         ];
 
-
         $this->queryBuilder->shouldReceive('select')
             ->with('s.id', 's.name', 's.age')
             ->once()

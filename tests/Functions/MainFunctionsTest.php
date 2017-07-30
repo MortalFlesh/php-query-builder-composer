@@ -1,20 +1,22 @@
 <?php
 
-namespace MF\QueryBuilderComposer\Tests;
+namespace MF\QueryBuilderComposer\Tests\Functions;
 
 use Doctrine\ORM\QueryBuilder;
+use MF\QueryBuilderComposer\Tests\ProviderTrait;
+use MF\QueryBuilderComposer\Tests\QueryBuilderComposerTestCase;
 use Mockery as m;
-use function MF\QueryBuilderComposer\applyModifier;
-use function MF\QueryBuilderComposer\applyPart;
-use function MF\QueryBuilderComposer\applyRule;
-use function MF\QueryBuilderComposer\compose;
-use function MF\QueryBuilderComposer\mergePartGroups;
-use function MF\QueryBuilderComposer\modifier;
-use function MF\QueryBuilderComposer\modifierAppend;
-use function MF\QueryBuilderComposer\modifierSet;
-use function MF\QueryBuilderComposer\sanitizeRule;
+use function MF\QueryBuilderComposer\Functions\applyModifier;
+use function MF\QueryBuilderComposer\Functions\applyPart;
+use function MF\QueryBuilderComposer\Functions\applyRule;
+use function MF\QueryBuilderComposer\Functions\compose;
+use function MF\QueryBuilderComposer\Functions\mergePartGroups;
+use function MF\QueryBuilderComposer\Functions\modifier;
+use function MF\QueryBuilderComposer\Functions\modifierAppend;
+use function MF\QueryBuilderComposer\Functions\modifierSet;
+use function MF\QueryBuilderComposer\Functions\sanitizeRule;
 
-class FunctionsTest extends QueryBuilderComposerTestCase
+class MainFunctionsTest extends QueryBuilderComposerTestCase
 {
     use ProviderTrait;
 

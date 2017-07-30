@@ -20,7 +20,9 @@
             "MF\\QueryBuilderComposer\\": "src"
         },
         "files": [
-            "src/functions.php"
+            "src/Functions/main.php",
+            "src/Functions/util.php",
+            "src/Functions/type.php"
         ]
     },
     "autoload-dev": {

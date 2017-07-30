@@ -2,20 +2,28 @@
 
 namespace MF\QueryBuilderComposer;
 
+use const MF\QueryBuilderComposer\Functions\APPLY_MODIFIER;
+use const MF\QueryBuilderComposer\Functions\APPLY_PART;
+use const MF\QueryBuilderComposer\Functions\APPLY_RULE;
+use const MF\QueryBuilderComposer\Functions\COMPOSE;
+use const MF\QueryBuilderComposer\Functions\MODIFIER;
+use const MF\QueryBuilderComposer\Functions\MODIFIER_APPEND;
+use const MF\QueryBuilderComposer\Functions\MODIFIER_SET;
 use function Functional\curry_n;
 
 /**
  * Types:
+ * @see Functions/type.php
  *
- *  QueryBuilderModifier =
+ *  Modifier =
  *      (QueryBuilder -> QueryBuilder)
  *
  *  Rule =
- *      | string[]
- *      | string
+ *      string[]
  *
  *  Part =
- *      | QueryBuilderModifier
+ *      | string<Rule>
+ *      | Modifier
  *      | Rule
  *
  * @see \Doctrine\ORM\QueryBuilder::add()
@@ -51,7 +59,7 @@ class Curry
 
     /**
      * see Types above
-     * @return callable (QueryBuilder -> QueryBuilderModifier) -> QueryBuilder
+     * @return callable (QueryBuilder -> Modifier) -> QueryBuilder
      */
     public static function applyModifier(): callable
     {
@@ -60,7 +68,7 @@ class Curry
 
     /**
      * see Types above
-     * @return callable (QueryBuilder -> Part) -> QueryBuilder
+     * @return callable (QueryBuilder -> Rule) -> QueryBuilder
      */
     public static function applyRule(): callable
     {

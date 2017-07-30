@@ -3,6 +3,8 @@
 namespace MF\QueryBuilderComposer;
 
 use Doctrine\ORM\QueryBuilder;
+use function MF\QueryBuilderComposer\Functions\compose;
+use function MF\QueryBuilderComposer\Functions\mergePartGroups;
 
 class QueryBuilderComposer
 {
