@@ -27,7 +27,7 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
     public function testShouldComposeAndApplyRulesToQueryBuilder()
     {
         $approvedExpr = new Expr\Andx('b.approved = true');
-        $approvedModifier = Curry::modifier()(true)('where')($approvedExpr);
+        $approvedModifier = Curry::modifierAppend()('where')($approvedExpr);
 
         $parts = [
             ['select', 's.id', 's.name'],
@@ -81,7 +81,7 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
     public function testShouldComposeMergedPartsAndApplyRulesToQueryBuilder()
     {
         $approvedExpr = new Expr\Andx('b.approved = true');
-        $approvedModifier = Curry::modifier()(true)('where')($approvedExpr);
+        $approvedModifier = Curry::modifierAppend()('where')($approvedExpr);
 
         $approvedMature = [
             $approvedModifier,
@@ -118,7 +118,7 @@ class QueryBuilderComposerTest extends QueryBuilderComposerTestCase
     public function testShouldMergeComposePartsAndApplyRulesToQueryBuilder()
     {
         $approvedExpr = new Expr\Andx('b.approved = true');
-        $approvedModifier = Curry::modifier()(true)('where')($approvedExpr);
+        $approvedModifier = Curry::modifierAppend()('where')($approvedExpr);
 
         $approvedMature = [
             $approvedModifier,
