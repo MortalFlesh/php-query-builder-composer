@@ -16,8 +16,6 @@ const MODIFIER = QBC_NAMESPACE . 'modifier';
 const MODIFIER_APPEND = QBC_NAMESPACE . 'modifierAppend';
 const MODIFIER_SET = QBC_NAMESPACE . 'modifierSet';
 
-const EXPLODE_BY_SPACE = QBC_NAMESPACE . 'explodeBySpace';
-
 const APPEND = true;
 
 function compose(array $parts, QueryBuilder $queryBuilder): QueryBuilder
