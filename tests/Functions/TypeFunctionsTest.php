@@ -2,7 +2,7 @@
 
 namespace MF\QueryBuilderComposer\Tests\Functions;
 
-use MF\QueryBuilderComposer\Tests\ProviderTrait;
+use MF\QueryBuilderComposer\Tests\Provider\TypeProviderTrait;
 use MF\QueryBuilderComposer\Tests\QueryBuilderComposerTestCase;
 use function MF\QueryBuilderComposer\Functions\isModifier;
 use function MF\QueryBuilderComposer\Functions\isPart;
@@ -12,7 +12,7 @@ use function MF\QueryBuilderComposer\Functions\isSingleStringPart;
 
 class TypeFunctionsTest extends QueryBuilderComposerTestCase
 {
-    use ProviderTrait;
+    use TypeProviderTrait;
 
     /**
      * @dataProvider isPartProvider

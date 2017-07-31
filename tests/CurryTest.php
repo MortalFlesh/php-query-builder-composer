@@ -4,11 +4,12 @@ namespace MF\QueryBuilderComposer\Tests;
 
 use Doctrine\ORM\QueryBuilder;
 use MF\QueryBuilderComposer\Curry;
+use MF\QueryBuilderComposer\Tests\Provider\MainProviderTrait;
 use Mockery as m;
 
 class CurryTest extends QueryBuilderComposerTestCase
 {
-    use ProviderTrait;
+    use MainProviderTrait;
 
     /** @var QueryBuilder|m\MockInterface */
     private $queryBuilder;

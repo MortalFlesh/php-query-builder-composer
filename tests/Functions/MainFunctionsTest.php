@@ -3,6 +3,7 @@
 namespace MF\QueryBuilderComposer\Tests\Functions;
 
 use Doctrine\ORM\QueryBuilder;
+use MF\QueryBuilderComposer\Tests\Provider\MainProviderTrait;
 use MF\QueryBuilderComposer\Tests\ProviderTrait;
 use MF\QueryBuilderComposer\Tests\QueryBuilderComposerTestCase;
 use Mockery as m;
@@ -18,7 +19,7 @@ use function MF\QueryBuilderComposer\Functions\sanitizeRule;
 
 class MainFunctionsTest extends QueryBuilderComposerTestCase
 {
-    use ProviderTrait;
+    use MainProviderTrait;
 
     /** @var QueryBuilder|m\MockInterface */
     private $queryBuilder;
