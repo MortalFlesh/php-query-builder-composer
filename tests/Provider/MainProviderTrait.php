@@ -280,14 +280,6 @@ trait MainProviderTrait
         ];
     }
 
-    public function sanitizeRuleProvider()
-    {
-        return [
-            'string []' => [['select', 's.id'], ['select', 's.id']],
-            'single string in string []' => [['select s.id'], ['select', 's.id']],
-        ];
-    }
-
     public function modifierProvider()
     {
         return [

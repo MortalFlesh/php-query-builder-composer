@@ -15,7 +15,6 @@ use function MF\QueryBuilderComposer\Functions\mergePartGroups;
 use function MF\QueryBuilderComposer\Functions\modifier;
 use function MF\QueryBuilderComposer\Functions\modifierAppend;
 use function MF\QueryBuilderComposer\Functions\modifierSet;
-use function MF\QueryBuilderComposer\Functions\sanitizeRule;
 
 class MainFunctionsTest extends QueryBuilderComposerTestCase
 {
@@ -89,16 +88,6 @@ class MainFunctionsTest extends QueryBuilderComposerTestCase
         $queryBuilder = applyRule($this->queryBuilder, $rule);
 
         $this->assertSame($this->queryBuilder, $queryBuilder);
-    }
-
-    /**
-     * @dataProvider sanitizeRuleProvider
-     */
-    public function testShouldSanitizeRule(array $rule, array $expectedRule)
-    {
-        $result = sanitizeRule($rule);
-
-        $this->assertSame($expectedRule, $result);
     }
 
     /**
